@@ -1,0 +1,8 @@
+<!-- 发布-订阅模式也叫观察者模式。 通过一对一或者一对多的依赖关系，当对象发生改变时，订阅方都会收到通知。 -->
+<ul id="ul"></ul>
+<script>
+	let ul = document.querySelector('#ul')
+	ul.addEventListener('click',(event)=>{
+		console.log(event.target)
+	})
+</script>
