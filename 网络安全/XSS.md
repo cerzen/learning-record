@@ -26,10 +26,33 @@ XSS可以分为很多种类型，但是总体上分为两类：持久型和非�
 #如何防范XSS攻击
 ---
 对于XSS攻击来说，通产有两种方式可以防御
-<br>
+---
 ##转义字符
 ---
-
+```
+//首先对于用户的输入应该是永远不信任的。最普遍的做法就是转义输入输出的内容，对于引号、尖括号、斜杆进行转义
+function escape(str){
+	str = str.replace(/&/g,'&amp；')
+	str = str.replace(/</g,'&lt;')
+	str = str.replace(/>/g,'&gt;')
+	str = str.replace(/"/g,'&quto;')
+	str = str.replace(/'/g,'&#39;')
+	str = str.replace(/`/g,'&#96;')
+	str = str.replace(/\//g,'&#x2F;')
+	return str
+}
+// 通过转义可以进攻击代码<script>alert(1)</script>变成
+// --》&lt;script&gt;alert(1)&lt;&#x2F;script&gt;
+escape('<script>alert(1)</script>')
+/*但是对于富文本来说，显然不能通过上面的办法来转义所有字符，因为这样会把需要的格式也过滤掉。
+对于这种情况，通常采用白名单过滤的办法，当然也可以通过黑名单过滤，但是考虑到需要过滤的标签
+和标签属性实在太多，更加推荐使用白名单的方式。
+*/
+const xss = require('xss')
+let html= xss('<h1 id="title">XSS Demo</h1><script>alert("xss");</script>')
+// --> <h1> XSS Demo</h1>&lt;script&gt;alert("xss")&lt;&#x2F;script&gt;
+// 以上示例使用了js-xss形式来实现，可以看到在输出中保留了h1标签且过滤了script标签。 
+```
 --
 #什么是CSP？
 ---
