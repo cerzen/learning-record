@@ -29,8 +29,8 @@ XSS可以分为很多种类型，但是总体上分为两类：持久型和非�
 ---
 ##转义字符
 ---
+首先对于用户的输入应该是永远不信任的。最普遍的做法就是转义输入输出的内容，对于引号、尖括号、斜杆进行转义
 ```
-//首先对于用户的输入应该是永远不信任的。最普遍的做法就是转义输入输出的内容，对于引号、尖括号、斜杆进行转义
 function escape(str){
 	str = str.replace(/&/g,'&amp；')
 	str = str.replace(/</g,'&lt;')
@@ -41,6 +41,7 @@ function escape(str){
 	str = str.replace(/\//g,'&#x2F;')
 	return str
 }
+```
 // 通过转义可以进攻击代码<script>alert(1)</script>变成
 // --》&lt;script&gt;alert(1)&lt;&#x2F;script&gt;
 escape('<script>alert(1)</script>')
@@ -52,7 +53,5 @@ const xss = require('xss')
 let html= xss('<h1 id="title">XSS Demo</h1><script>alert("xss");</script>')
 // --> <h1> XSS Demo</h1>&lt;script&gt;alert("xss")&lt;&#x2F;script&gt;
 // 以上示例使用了js-xss形式来实现，可以看到在输出中保留了h1标签且过滤了script标签。 
-```
---
 #什么是CSP？
 ---
