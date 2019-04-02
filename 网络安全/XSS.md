@@ -43,4 +43,21 @@ let html= xss('<h1 id="title">XSS Demo</h1><script>alert("xss");</script>')
 // --> <h1> XSS Demo</h1>&lt;script&gt;alert("xss")&lt;&#x2F;script&gt;
 // 以上示例使用了js-xss形式来实现，可以看到在输出中保留了h1标签且过滤了script标签。 
 ```
-### 什么是CSP？
+### CSP
+
+CSP本质上就是建立白名单，开发者明确告诉浏览器哪些外部资源可以加载和执行。
+我们只需要配置规则，如何拦截由浏览器自己实现的。我们可以通过这种方式来尽量减少XSS攻击。
+ 通常可以通过这两种方式来开启CSP：
+ 
+
+ 1. 设置HTTP Header中的Content-Security-Policy
+ 2. 设置meta 标签的方式 `<meta http-equiv="Content-Security-Policy">` 
+
+这里以设置HTTP Header 来举例
+
+ - 只允许加载本站资源`Content-Security -Policy: default-src 'self'`
+ - 只允许加载HTTPS协议图片`Content-Security-Policy: img-src https://*`
+ - 允许加载任何来源框架`Content-Security-Policy:child-src 'none'`
+ 
+可以设置的属性还有很多 ，只要开发者配置了正确的规制，那么即使网站存在漏洞，攻击者也不能执行它的攻击代码。
+
