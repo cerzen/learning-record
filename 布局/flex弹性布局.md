@@ -50,9 +50,9 @@ flex布局是一种一维布模型，一次只能处理一个维度（一行或�
   
   - flex-direction: column column 上->下
   
-  -flex-direction:row-reverse row-reverse 左 <- 右
+  - flex-direction:row-reverse row-reverse 左 <- 右
   
-  -flex-direction:column-reverse column-reverse 上<-下
+  - flex-direction:column-reverse column-reverse 上<-下
   
 ## 2.沿主轴的排列处理
 
@@ -69,7 +69,17 @@ flex布局是一种一维布模型，一次只能处理一个维度（一行或�
 ## 3.一个复合属性
 
 `flex-flow = flex-direction + flex-wrap`
+
 `flex-flow`相当于规定了flex布局的“工作流（flow）”
+
 `flex-flow"row nowrap`
+
+# 三、元素如何弹性伸缩应对
+
+当`flex-wrap:nowrap;`不折行时，容器宽度有剩余/不够分，弹性元素们该怎么“弹性”地伸缩应对
+
+这里针对上面两种场景，引入两个属性（需应用在弹性元素上）
+ 
+ 1.`flex-shrink`:缩小比例
 
 原文：https://www.cnblogs.com/qcloud1001/p/9848619.html
