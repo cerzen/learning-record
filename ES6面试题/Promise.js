@@ -37,3 +37,19 @@ Promise.resolve(1)
 })
 // Promise可以很好地解决回调地狱的问题
 // 缺点是无法取消Promise，错误需要通过回调函数捕获
+
+//面试例子
+
+
+console.log(1)
+ new Promise((resolve,reject)=>{
+ 	console.log(2)
+ 	resolve()
+ }).then(msg=>{
+ 	console.log(3)
+ })
+ console.log(4)
+ setTimeout(()=>{
+ 	console.log(5)
+ })
+//输出 1 2 4 3 5  Promise后的 先于.then 运行
