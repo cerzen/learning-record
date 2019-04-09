@@ -151,6 +151,134 @@ flex布局是一种一维布模型，一次只能处理一个维度（一行或�
    
   # 四、弹性处理与刚性尺寸
   
+  在进行弹性处理之余，其实有些场景我们更希望元素尺寸固定，不需要进行弹性调整。设置元素尺寸除了width和height以为，
+  flex还提供了一个`flex-basis`属性。
+  
+  `flex-basis`设置的是元素在主轴上的初始尺寸，所谓的初始尺寸就是元素在`flex-grow`和`flex-shrink`生效前的尺寸。
+  
+  ## 1.与width/height的区别
+  
+  首先以width为例进行比较。 `#container{display:flex;}`
+  
+  ```
+  
+  <div id="container">
+    <div>1111</div>
+    <div>2222</div>
+  </div>
+  
+  ```
+  
+   (1)两者都为0
+   
+   ```
+   
+   div > div:first-child{
+     width:0;
+   }
+   
+   div > div:nth-child(2){
+    flex-basis:0;
+   }
+   
+   ```
+   
+   - width：0 ----完全没显示
+   
+   - flex-basis:0 --- 根据内容撑开宽度
+   
+   (2)两者非0
+   
+   ```
+   
+   div > div:first-child{
+    width:50px;
+   }
+   
+   div > div:nth-child(2){
+    flex-basis:50px;
+    width:60px;
+   }
+   
+   ```
+   
+   - width：非0 ------数值相同时两者等效。
+   
+   - flex-basis:非0 ---- 同时设置，flex-basis优先级高
+   
+   (3)flex-basis为auto
+   
+   ```
+   
+   div > div:first-child{
+    flex-basis: auto;
+   }
+   
+   div > div:nth-child(2){
+    flex-basis:auto;
+    width:60px;
+   }
+   
+   ```
+   flex-basis为auto时，如设置了width则元素尺寸由width决定；没有设置则有内容决定
+   
+   (4)flex-basis== 主轴上的尺寸 ！=width
+   
+   ```
+   #container{
+     flex-direction:column;
+   }
+   
+   div > div:first-child{
+     flex-basis: auto;
+     height:50px;
+   }
+   
+   div > div:nth-child(2){
+    flex-basis:60px;
+    width:100px;
+   }
+   
+   ```
+   
+   - 将主轴方向改为：上->下
+   
+   - 此时主轴上的尺寸是元素的height
+   
+   - flex-baiss==height
+   
+   ## 2.常用的复合属性flex
+   
+   这个属性应该是最容易迷糊的一个。
+   
+   flex=flex-grow+flex-shrink+felx-basis
+   
+   复合属性，前面说的三个属性的简写
+   
+   一些简写
+   
+   - felx:1 = flex: 1 1 0%
+   
+   - flex:2 = flex: 2 1 0%
+   
+   - flex:auto = flex: 1 1 auto;
+   
+   - flex: auto = flex: 0 0 auto;
+   
+   ### flex:1和flex:auto的区别
+   
+   其实可以归结于 `flex-basis:0`和`flex-basis:auto`的区别
+   
+   `flex-basis`是指定初始尺寸，当设置为0 时（绝对弹性元素），此时相当于告诉`flex-grow`和`flex-shrink`
+   在伸缩的时候不需要考虑我的尺寸；相反设置为`auto`时（相对弹性元素），此时则需要在伸缩时将元素尺寸纳入考虑。
+   
+   
+   # 五、容器内如何对齐
+   
+   
+   
+   
+  
   
 
 原文：https://www.cnblogs.com/qcloud1001/p/9848619.html
