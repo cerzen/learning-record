@@ -286,8 +286,152 @@ flex布局是一种一维布模型，一次只能处理一个维度（一行或�
                    center 居中
                    space-between 间隔对齐
                    sapce-around  间隔对称对齐
-                   
-                   
+    
+    2.交叉轴上的对齐方式
+    
+    主轴上比较好理解，重点是交叉轴上。因为交叉轴上存在单行和多行两种情况。
+    
+    交叉轴的单行对齐
+    
+    align-items
+    
+    默认值是 stretch ， 当元素没有设置具体尺寸时会将容器在交叉轴方向撑满。
+    
+    当align-items 部位 stretch时，此时除了对齐方式会改变之外，元素在交叉轴方向上的尺寸将由内容或自身尺寸（宽高）决定。
+    
+    元素为设置高度 或设为auto ，将占满整个容器的高度
+    
+    flex-start 沿交叉轴起点对齐
+    
+    flex-end  沿交叉轴终点对齐
+    
+    center   沿交叉轴中点对齐
+    
+    baseline 沿第一行的基线对齐
+    
+    注：交叉轴不一定是从上往下的， flex-direction:column 改变主轴方向：上->下
+    
+    交叉轴上的多行对齐
+    
+    还记得可以通过 `flex-wrap:wrap` 使得元素在一行放不下时进行换行。在这种场景下就会在交叉轴上出现多行，
+    多行情况下，flex布局提供了`align-content`属性设置对齐。
+    
+    `align-content`与`align-items`比较类似，同时也比较容易模糊。下面将两者对比来看它们的异同。
+    
+    首先明确一点：`align-content`只对多行元素有效，会以多行作为整体进行对齐，容器必须开启换行。
+    
+    ```
+    
+    align-content: stretch | flex-start | flex-end | center | space-between | space-around
+    
+    align-items:stretch | flex-start|flex-end|center | baseline
+    
+    ```
+    
+    在属性值上，`align-content`比`align-items`多两个值：`space-between`和`space-around`.
+    
+    align-content 与 align-items 异同对比
+    
+    与`align-items`一样，`align-content`默认值也是stretch。两者同时都为stretch时，毫无悬念所有元素都是撑满交叉轴。
+    
+    ```
+    
+    #container{
+      align-items:stretch;
+      align-content: stretch
+    }
+    
+    ```
+   
+   当我们将 align-items改为flex-start或者给弹性元素设置一个具体高度，此时效果是行与行之间形成了间距。
+   
+   ```
+   
+   #container{
+     align-items:flex-start;
+     align-content: stretch
+    }
+    
+    /*或者*/
+    
+    #container {
+     align-content: stretch
+    }
+    #container >div {
+     height:30px
+    }
+    
+   ```
+    
+    为什么？因为`align-content`会以整行为单位，此时会将整行进行拉伸占满交叉轴；而`align-items`设置了高度或者顶对齐，
+    在不能用高度进行拉伸的情况下，选择了用间距。
+    
+    尝试把align-content 设置为顶对齐，此时以行为单位，整体高度通过内容撑开。
+    
+    而`align-items`仅仅管一行，因此在只有第一个元素设置了高度的情况下，第一行的其他元素遵循align-items：stretch也被拉伸到了50px。
+    而第二行则保持高度不变。
+   
+   ```
+   
+   #container{
+    align-items: stretch
+    align-content: flex-start;
+   }
+   
+   #container > div:first-child{
+    height:50px
+   }
+   
+   ```
+    
+    两者差异总结：
+    
+      - 两者“作用域”不同
+      
+      - align-content 管全局（所有行规视为整体）
+      
+      - align-items管单行
+      
+     能否更灵活地设置交叉轴对齐
+     
+     除了在容器上设置交叉轴对齐，还可以通过`align-self`单独对某个元素设置交叉轴对齐方式。
+     
+     1.值与`align-items`相同
+     
+     2.可覆盖容器的`align-items`属性
+     
+     3.默认值为auto，表示继承父元素的`align-items`属性
+     
+     
+     
+ # 六、其他
+ 
+  order：更优雅地调整元素顺序
+  
+  order：可设置元素之间的排列顺序
+  
+    1.数值越小，越靠前，默认为0
+    
+    2.值相同，以dom中元素排列为准
+    
+ # 七、总结
+ 
+   弹性盒模型：主轴（main axis） 交叉轴（cross axis）
+             flex-direction(修改主轴方向) flex-wrap(折行) flex-flow(两个属性的简写):row wrap
+             
+             不拆行时，flex-wrap:nowrap
+             flex-grow (放大) flex-shrink(缩小) flex- basis（设置原始尺寸）  flex（简写）
+             
+             order：（调整顺序）
+             
+             
+     容器内对齐： justify-content （主轴上的对齐方式）
+     
+                 align-items（交叉轴上（单行）的对齐方式）
+                 
+                 align-content（交叉轴上（多行）的对齐方式）
+                 
+                 align-self（单独为元素设置对齐方式（覆盖align-items））
    
    
    
